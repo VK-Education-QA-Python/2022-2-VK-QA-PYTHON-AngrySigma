@@ -9,15 +9,13 @@ LOGIN_BUTTON_LOCATOR = (By.XPATH,
                         ' and not(contains(@class, "disabled"))]')
 USERNAME_LOCATOR = (By.XPATH, '//*[contains(@class, "right-module-mail")]')
 LOGIN_EMAIL_OR_PHONE_ERROR = (By.XPATH,
-                              '//*[contains(@class, "authForm-module-notify")]'
-                              '//child::div'
-                              '[contains(@class, "notify-module-error")]')
+                              '//*[contains(@class, "notify-module-error")'
+                              'and string-length(text()) > 0]')
 WRONG_LOGIN_OR_PASSWORD_LOCATOR = (By.XPATH,
-                                   '//*[@id="login_form"]'
-                                   '//*[contains(@class, "formMsg_title")]'
-                                   '//following::div'
-                                   '[contains(@class, formMsg_text)]')
+                                   '//*[@class="formMsg_text"]')
 INACTIVE_LOGIN_BUTTON_LOCATOR = (By.XPATH,
                                  '//*[contains'
                                  '(@class, "authForm-module-disabled")]')
 LOGOUT_LOCATOR = (By.XPATH, '//*[@href="/logout"]')
+CUSTOM_LOGOUT_LOCATOR = (By.XPATH, './/*[contains(@class,"right-module-mail")]'
+                         )

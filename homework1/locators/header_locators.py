@@ -1,15 +1,24 @@
 from selenium.webdriver.common.by import By
 
 MORE_BUTTON_LOCATOR = (By.XPATH, '//*[contains(@class, "center-module-more")]')
-DASHBOARD_LOCATOR = (By.XPATH, '//*[@href="/dashboard"]')
-SEGMENTS_LOCATOR = (By.XPATH, '//*[@href="/segments"]')
-BILLING_LOCATOR = (By.XPATH, '//*[@href="/billing"]')
-STATISTICS_LOCATOR = (By.XPATH, '//*[@href="/statistics"]')
-PRO_LOCATOR = (By.XPATH, '//*[@href="/pro"]')
-PROFILE_LOCATOR = (By.XPATH, '//*[@href="/profile"]')
-TOOLS_LOCATOR = (By.XPATH, '//*[@href="/tools"]')
+DASHBOARD_LOCATOR = (By.XPATH, '//*[contains(@class, "pageHead")]//'
+                               'descendant::a[@href="/dashboard"]')
+SEGMENTS_LOCATOR = (By.XPATH, '//*[contains(@class, "pageHead")]//'
+                              'descendant::a[@href="/segments"]')
+BILLING_LOCATOR = (By.XPATH, '//*[contains(@class, "pageHead")]//'
+                             'descendant::a[@href="/billing"]')
+STATISTICS_LOCATOR = (By.XPATH, '//*[contains(@class, "pageHead")]//'
+                                'descendant::a[@href="/statistics"]')
+PRO_LOCATOR = (By.XPATH, '//*[contains(@class, "pageHead")]//'
+                         'descendant::a[@href="/pro"]')
+PROFILE_LOCATOR = (By.XPATH, '//*[contains(@class, "pageHead")]//'
+                             'descendant::a[@href="/profile"]')
+TOOLS_LOCATOR = (By.XPATH, '//*[contains(@class, "pageHead")]//'
+                           'descendant::a[@href="/tools"]')
 HELP_LOCATOR = (By.XPATH,
-                '//*[contains(@href, "//target.my.com/help/advertisers/")]')
+                '//*[contains(@class, "pageHead")]//'
+                'descendant::a[contains(@href, "//'
+                'target.my.com/help/advertisers/")]')
 
 
 DASHBOARD_ACTIVE_LOCATOR = (By.XPATH,

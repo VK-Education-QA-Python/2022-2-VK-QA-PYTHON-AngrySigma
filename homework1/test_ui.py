@@ -1,13 +1,11 @@
 from os import getenv
-from time import sleep
 
 import pytest
+from base import BaseCase
 from dotenv import load_dotenv
+from locators import header_locators, login_locators
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
-
-from base import BaseCase
-from locators import header_locators, login_locators
 
 load_dotenv()
 
@@ -15,7 +13,6 @@ load_dotenv()
 class TestUi(BaseCase):
     @pytest.mark.UI
     def test_login(self, driver):
-        sleep(5)
         self.click(login_locators.LOGIN_LOCATOR)
         assert 'authForm' in driver.page_source, (
             'Authentication form did not appear')
@@ -34,13 +31,12 @@ class TestUi(BaseCase):
         self.login()
         self.find(header_locators.DASHBOARD_ACTIVE_LOCATOR)
         self.open_right_menu()
-        sleep(0.5)
         self.click(login_locators.LOGOUT_LOCATOR)
         assert self.find(login_locators.LOGIN_LOCATOR)
 
     @pytest.mark.UI
-    def test_login_without_email(self, driver):
-        self.login(email='not_email_or_phone_number')
+    def test_login_with_invalid_email(self, driver):
+        self.login(email=getenv('INVALID_EMAIL'))
         try:
             self.find(login_locators.USERNAME_LOCATOR)
         except TimeoutException:
@@ -54,14 +50,15 @@ class TestUi(BaseCase):
 
     @pytest.mark.UI
     def test_wrong_password(self, driver):
-        self.login(password='wrong_password')
+        self.login(password=getenv('WRONG_PASSWORD'))
         assert self.find(login_locators.WRONG_LOGIN_OR_PASSWORD_LOCATOR), (
             'Did not get redirect to auth page')
 
     @pytest.mark.UI
     @pytest.mark.parametrize('email, password', [('', ''),
-                                                 ('email@mail.com', ''),
-                                                 ('', 'password')])
+                                                 (getenv('WRONG_EMAIL'), ''),
+                                                 ('', getenv('WRONG_PASSWORD'))
+                                                 ])
     def test_login_inactive_without_credentials(self, email, password):
         try:
             self.login(email=email, password=password)
