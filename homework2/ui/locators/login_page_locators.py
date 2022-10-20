@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
 
-class LoginLocators():
+class LoginPageLocators():
     LOGIN_LOCATOR = (By.XPATH,
                      '//*[contains(@class, "responseHead-module-button")]')
     EMAIL_LOCATOR = (By.NAME, 'email')
@@ -11,7 +11,8 @@ class LoginLocators():
                             ' and not(contains(@class, "disabled"))]')
     USERNAME_LOCATOR = (By.XPATH, '//*[contains(@class, "right-module-mail")]')
     LOGIN_EMAIL_OR_PHONE_ERROR = (By.XPATH,
-                                  '//*[contains(@class, "authForm-module-notify")]'
+                                  '//*[contains(@class,'
+                                  '"authForm-module-notify")]'
                                   '//child::div'
                                   '[contains(@class, "notify-module-error")]')
     WRONG_LOGIN_OR_PASSWORD_LOCATOR = (By.XPATH,
