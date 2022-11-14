@@ -127,4 +127,5 @@ dmypy.json
 .pyre/
 .idea/
 /docs/
-homework2/ui/reports
+
+/homework2/ui/reports/
