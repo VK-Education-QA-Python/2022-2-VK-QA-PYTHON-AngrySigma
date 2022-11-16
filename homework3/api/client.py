@@ -48,7 +48,7 @@ class ApiClient:
         return response
 
     def create_segment(self, segment_data):
-        headers = self.xcsrf_header()
+        headers = self.csrf_token
         response = self._request(method='POST',
                                  location='/api/v2/remarketing/segments.json',
                                  headers=headers,
@@ -56,13 +56,13 @@ class ApiClient:
         return response.json()['id']
 
     def delete_segment(self, id):
-        headers = self.xcsrf_header()
+        headers = self.csrf_token
         self._request(method='DELETE',
                       location=f'/api/v2/remarketing/segments/{id}.json',
                       headers=headers)
 
     def get_segment(self, id):
-        headers = self.xcsrf_header()
+        headers = self.csrf_token
         response = self._request(method='GET',
                                  location=(f'/api/v2/remarketing/'
                                            f'segments/{id}.json'),
@@ -73,7 +73,7 @@ class ApiClient:
         return response.json()
 
     def add_vk_group(self, data):
-        headers = self.xcsrf_header()
+        headers = self.csrf_token
         response = self._request(method='POST',
                                  location='/api/v2/remarketing/vk_groups.json',
                                  headers=headers,
@@ -84,7 +84,7 @@ class ApiClient:
         return response.json()
 
     def get_vk_groups(self):
-        headers = self.xcsrf_header()
+        headers = self.csrf_token
         response = self._request(method='GET',
                                  location='/api/v2/remarketing/vk_groups.json',
                                  headers=headers)
@@ -94,7 +94,7 @@ class ApiClient:
         return response.json()
 
     def delete_vk_group(self, group_id):
-        headers = self.xcsrf_header()
+        headers = self.csrf_token
         response = self._request(
             method='DELETE',
             location=f'/api/v2/remarketing/vk_groups/{group_id}.json',
@@ -104,13 +104,13 @@ class ApiClient:
                 'Did not get deletion confirmation from server')
 
     def upload_image(self, image):
-        headers = self.xcsrf_header()
+        headers = self.xcsrf_header().update({'Content-Type': 'multipart/form-data'})
         response = self._request(
             method='POST',
             location='/api/v2/content/static.json',
             headers=headers,
             data=f'{{"file": "{image}", "data": {{"width": 1000, "height": 1000}}}}')
-        if response.status_code != 204:
+        if response.status_code != 201:
             raise ResponseStatusCodeException()
         return response.json()
 

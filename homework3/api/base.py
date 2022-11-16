@@ -10,3 +10,4 @@ class ApiBase:
 
         if self.authorize:
             self.api_client.post_login(*credentials)
+            self.api_client.csrf_token = {'X-CSRFToken': self.api_client.session.cookies.get_dict()['csrftoken']}
