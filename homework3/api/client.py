@@ -30,18 +30,14 @@ class ApiClient:
             'email': email,
             'password': password,
             'continue':
-                f'{self.base_url}/'
-                f'auth/mycom?state=target_login%3D1%26ignore_opener%3D1#email',
+                f'{self.base_url}/csrf/'
         }
         headers = {
             'Referer': self.base_url,
         }
         self.session.post(self.auth_url,
                           data=data, headers=headers)
-        self.get_token()
-
-    def get_token(self):
-        self.session.get('https://target-sandbox.my.com/csrf/')
+        assert self.session.cookies['csrftoken']
 
     def _request(self, method, location, headers=None, data=None):
         url = urljoin(self.base_url, location)

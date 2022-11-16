@@ -1,5 +1,6 @@
 import base64
 from os import getenv
+from http import HTTPStatus
 
 import pytest
 from dotenv import load_dotenv
@@ -14,19 +15,18 @@ class TestApiAuth(ApiBase):
     @pytest.mark.API
     def test_login(self):
         self.api_client.post_login()
-        assert self.api_client.session.get(
-            'https://target-sandbox.my.com/'
-            'api/v2/campaigns.json').json().get('error') is None
+        assert self.api_client.session.get('https://target-sandbox.my.com/'
+            'api/v2/campaigns.json').status_code == HTTPStatus.OK
 
     @pytest.mark.API
     def test_negative_login(self):
         load_dotenv()
         self.api_client.session.cookies.clear()
-        self.api_client.post_login(email=getenv('WRONG_EMAIL'),
-                                   password=getenv('WRONG_PASSWORD'))
-        assert self.api_client.session.get(
-            'https://target-sandbox.my.com/'
-            'api/v2/campaigns.json').json().get('error') is not None
+        with pytest.raises(KeyError):
+            self.api_client.post_login(email=getenv('WRONG_EMAIL'),
+                                       password=getenv('WRONG_PASSWORD'))
+        assert self.api_client.session.get('https://target-sandbox.my.com/'
+            'api/v2/campaigns.json').status_code == HTTPStatus.UNAUTHORIZED
 
 
 class TestApi(ApiBase):

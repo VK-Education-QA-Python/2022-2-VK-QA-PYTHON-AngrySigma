@@ -23,19 +23,21 @@ def faker_seed():
 @pytest.fixture(scope='function')
 def segment_data(faker):
     first_param = choice(['positive', 'negative'])
-    second_param = choice(['positive', 'negative'])
-    data = (f'{{"name":"{faker.company()}",'
-            '"pass_condition":1,'
+    data = ('{'
+            f'"name": "{faker.company()}",'
+            '"pass_condition": 1,'
             '"relations":'
-            '[{"object_type":"remarketing_player",'
-            f'"params":{{"type":"{first_param}",'
-            f'"left":{randint(1, 365)},'
-            '"right":1}},'
-            '{"object_type":"remarketing_payer",'
-            f'"params":{{"type":"{second_param}",'
-            f'"left":{randint(1, 365)},'
-            '"right":1}}],'
-            '"logicType":"or"}')
+            '['
+            '{'
+            '"object_type": "remarketing_player",'
+            '"params":'
+            f'{{"type": "{first_param}",'
+            '"left":'
+            f'{randint(1, 365)},'
+            '"right": 1}'
+            '}'
+            ']'
+            '}')
     return data
 
 
@@ -49,13 +51,19 @@ def vk_group_data(object_id=115340687):
 def vk_group_segment_data(faker):
     first_param = 115340687
     second_param = choice(['positive', 'negative'])
-    data = ('{"name":"asdfasdf",'
-            '"pass_condition":1,'
+    data = ('{'
+            '"name": "asdfasdf",'
+            '"pass_condition": 1,'
             '"relations":'
-            '[{"object_type":"remarketing_vk_group",'
-            f'"params":{{"source_id":{first_param},'
-            f'"type":"{second_param}"}}}}],'
-            '"logicType":"or"}')
+            '['
+            '{'
+            '"object_type": "remarketing_vk_group",'
+            f'"params": {{"source_id":{first_param},'
+            f'"type": "{second_param}"}}'
+            '}'
+            '],'
+            '"logicType": "or"'
+            '}')
     return data
 
 

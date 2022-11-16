@@ -24,6 +24,9 @@ def repo_root():
     return os.path.abspath(os.path.join(__file__, os.path.pardir))
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='session', autouse=True)
 def api_client(credentials, config):
-    return ApiClient(base_url=config['url'], auth_url=config['auth_url'], email=credentials[0], password=credentials[1])
+    return ApiClient(base_url=config['url'],
+                     auth_url=config['auth_url'],
+                     email=credentials[0],
+                     password=credentials[1])
