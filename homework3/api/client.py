@@ -114,5 +114,4 @@ class ApiClient:
             raise ResponseStatusCodeException()
         return response.json()
 
-    def xcsrf_header(self):
-        return {'X-CSRFToken': self.session.cookies.get_dict()['csrftoken']}
+
