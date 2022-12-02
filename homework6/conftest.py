@@ -1,3 +1,5 @@
+import os.path
+
 import pytest
 from client import MysqlClient
 
@@ -27,3 +29,9 @@ def mysql_client(request):
     client.session.commit()
     client.execute_query('DROP database IF EXISTS test_sql')
     client.connection.close()
+
+
+@pytest.fixture(scope='session')
+def logfile():
+    with open(os.path.dirname(__file__) + '/access.log', 'r') as f:
+        yield f.readlines()
